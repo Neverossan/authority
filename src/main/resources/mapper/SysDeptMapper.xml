@@ -21,6 +21,33 @@
     from sys_dept
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getAllDept" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dept
+  </select>
+  <select id="getChildDeptListByLevel" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dept
+    where level like CONCAT(#{level},'.%')
+  </select>
+
+  <select id="countByNameAndParentId" resultType="java.lang.Integer">
+    select
+    count(1)
+    from sys_dept
+    where  name = #{deptName}
+    <if test="parentId = null" >
+      and parent_id = #{parentId}
+    </if>
+    <if test="deptId != null" >
+      and id != #{deptId}
+    </if>
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sys_dept
     where id = #{id,jdbcType=INTEGER}
@@ -137,5 +164,12 @@
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
       operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="batchUpdateLevel" >
+    <foreach collection="deptList" item="dept" separator=";">
+      UPDATE sys_dept
+      SET level = #{dept.level}
+      WHERE id = #{dept.id}
+    </foreach>
   </update>
 </mapper>

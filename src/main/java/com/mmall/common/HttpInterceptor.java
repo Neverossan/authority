@@ -32,11 +32,11 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String url = request.getRequestURI().toString();
+//        String url = request.getRequestURI().toString();
 //        Map map = request.getParameterMap();
-        Long start = (Long) request.getSession().getAttribute(START_TIME);
-        Long end = System.currentTimeMillis();
-        log.info("request finished. url:{}, cost:{}", url, end - start);
+//        Long start = (Long) request.getSession().getAttribute(START_TIME);
+//        Long end = System.currentTimeMillis();
+//        log.info("request finished. url:{}, cost:{}", url, end - start);
     }
 
     @Override
